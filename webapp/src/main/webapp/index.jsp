@@ -355,51 +355,6 @@
 
     </main>
 
-    <script>
-        // Show or hide passwords
-        document.querySelectorAll(".toggle-password").forEach(button => {
-            button.addEventListener("click", () => {
-                const input = document.getElementById(button.dataset.target);
-                const isPassword = input.type === "password";
-
-                input.type = isPassword ? "text" : "password";
-                button.textContent = isPassword ? "Hide" : "Show";
-                button.setAttribute(
-                    "aria-label",
-                    `${isPassword ? "Hide" : "Show"} ${button.dataset.target === "psw" ? "password" : "confirm password"}`
-                );
-            });
-        });
-
-        // Validate matching passwords
-        const password = document.getElementById("psw");
-        const confirmPassword = document.getElementById("psw-repeat");
-
-        function checkPasswords() {
-            if (confirmPassword.value && password.value !== confirmPassword.value) {
-                confirmPassword.setCustomValidity("Passwords do not match.");
-            } else {
-                confirmPassword.setCustomValidity("");
-            }
-        }
-
-        password.addEventListener("input", checkPasswords);
-        confirmPassword.addEventListener("input", checkPasswords);
-
-        // Handle form submission
-        document.getElementById("registerForm").addEventListener("submit", function(event) {
-            checkPasswords();
-
-            if (!this.checkValidity()) {
-                event.preventDefault();
-                this.reportValidity();
-                return;
-            }
-
-            // The form submits to action_page.php.
-            // The server must process registration and respond successfully.
-        });
-    </script>
 
 </body>
 </html>
