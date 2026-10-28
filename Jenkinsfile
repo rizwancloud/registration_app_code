@@ -97,14 +97,20 @@ pipeline {
                }
           }
         }
-        stage('Trigger Deployment Pipeline') {
+        stage('Trigger CD Pipeline') {
             steps {
                 build job: 'pipeline-for-CD',
-                parameters: [
-                    string(name: 'IMAGE_TAG', value: "${env.IMAGE_TAG}"),
-                    string(name: 'IMAGE_NAME', value: "${env.IMAGE_NAME}")
-                ],
-                wait: true
+                    wait: true,
+                    parameters: [
+                        string(
+                            name: 'IMAGE_NAME',
+                            value: "${env.IMAGE_NAME}"
+                        ),
+                        string(
+                            name: 'IMAGE_TAG',
+                            value: "${env.IMAGE_TAG}"
+                        )
+                    ]
             }
         }
 
