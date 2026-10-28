@@ -101,8 +101,8 @@ pipeline {
             steps {
                 build job: 'pipeline-for-CD',
                 parameters: [
-                    string(name: 'IMAGE_TAG', value: "${IMAGE_TAG}"),
-                    string(name: 'IMAGE_NAME', value: "${IMAGE_NAME}")
+                    string(name: 'IMAGE_TAG', value: "${env.IMAGE_TAG}"),
+                    string(name: 'IMAGE_NAME', value: "${env.IMAGE_NAME}")
                 ],
                 wait: true
             }
