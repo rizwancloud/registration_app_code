@@ -25,34 +25,33 @@ pipeline {
             steps {
                 sh "mvn clean package"
             }
+        }
 
-       }
-
-       stage("Test Application"){
+        stage("Test Application"){
            steps {
                  sh "mvn test"
            }
-       }
-
-
-stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('sonarqube') {
-            sh '''
-                mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-            '''
         }
-    }
-}
 
-stage('Quality Gate') {
-    steps {
-        timeout(time: 5, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: false
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh '''
+                        mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+                    '''
+                }
+            }
         }
-    }
-}
- stage('Docker Build') {
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: false
+                }
+            }   
+        }
+        stage('Docker Build') {
             steps {
                 sh 'docker build -t admindockerrizwan/${IMAGE_NAME}:${IMAGE_TAG} .'
             }
@@ -80,21 +79,25 @@ stage('Quality Gate') {
             }
         }
         
-       stage("Trivy Scan") {
-           steps {
-               script {
-	            sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image admindockerrizwan/${IMAGE_NAME}:${IMAGE_TAG} --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
-               }
-           }
-       }
-       stage ('Cleanup Artifacts') {
+        stage('Trivy Image Scan') {
+          steps {
+             sh '''
+                trivy image \
+                 --scanners vuln \
+                 --severity HIGH,CRITICAL \
+                 --exit-code 1 \
+                 admindockerrizwan/${IMAGE_NAME}:${IMAGE_TAG}
+            '''
+            }
+        }
+        stage ('Cleanup Artifacts') {
            steps {
                script {
                     sh "docker rmi admindockerrizwan/${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker rmi admindockerrizwan/${IMAGE_NAME}:latest"
                }
           }
-       }
+        }
 
 
     }
