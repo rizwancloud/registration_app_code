@@ -94,9 +94,18 @@ pipeline {
            steps {
                script {
                     sh "docker rmi admindockerrizwan/${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker rmi admindockerrizwan/${IMAGE_NAME}:latest"
                }
           }
+        }
+        stage('Trigger Deployment Pipeline') {
+            steps {
+                build job: 'pipeline-for-CD',
+                parameters: [
+                    string(name: 'IMAGE_TAG', value: "${IMAGE_TAG}"),
+                    string(name: 'IMAGE_NAME', value: "${IMAGE_NAME}")
+                ],
+                wait: true
+            }
         }
 
 
