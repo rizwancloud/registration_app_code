@@ -10,15 +10,15 @@ pipeline {
     
     stages{
         stage("Cleanup Workspace"){
-                steps {
+            steps {
                 cleanWs()
-                }
+            }
         }
 
-        stage("Checkout from SCM"){
-                steps {
-                    sh "git clone 'https://github.com/rizwancloud/registration_app_code.git' ."
-                }
+        stage('Checkout from SCM') {
+            steps {
+                checkout scm
+            }
         }
 
         stage("Build Application"){
