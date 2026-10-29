@@ -33,4 +33,13 @@ The Jenkins agent labelled `agent` needs Java, Maven, Docker access, Git, and Tr
 
 The pipeline currently uses `abortPipeline: false` for the SonarQube Quality Gate, so a failed gate does not by itself stop the pipeline. The Trivy stage is configured to fail on HIGH or CRITICAL findings.
 
+### Jenkins Pipeline CI Status
+![Argo CD Status](screenshots/pipeline_CI.png)
+
+### SonarQube Code Quality Analysis
+![Kubernetes Pods](screenshots/sonarqube.png)
+
+### ADocker Image Build and Push
+![Registration Application](screenshots/docker.png)
+
 **Security:** Keep real passwords and tokens in Jenkins Credentials. The `DOCKER_PASS` value in the current pipeline is a placeholder and should not be used as a real secret.
