@@ -40,7 +40,7 @@ The pipeline currently uses `abortPipeline: false` for the SonarQube Quality Gat
 >
 > Explore the complete project documentation covering infrastructure setup, Jenkins CI/CD pipelines, SonarQube, Docker, Kubernetes (Kind), Argo CD, deployment instructions, and troubleshooting.
 >
-> **[Read the Complete Project Documentation →](https://github.com/rizwancloud/k8s_registe_app/blob/f330201909e9ff87f1d11ae5844f7b3f9365911b/docs/PROJECT_DOCUMENTATION.md)**
+> **[Read the Complete Project Documentation →](https://github.com/rizwancloud/k8s_registe_app/blob/de0e5efbd1ee430e7dae72e6eb8914f793a48f66/docs/PROJECT_DOCUMENTATION.md)**
 
 
 ## Project Screenshots
